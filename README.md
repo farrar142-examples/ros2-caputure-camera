@@ -51,6 +51,7 @@ cd /mnt/e/ros2/capture_camera
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash
+# source install/setup.zsh Mac에서
 ```
 
 ## 실행
@@ -58,6 +59,7 @@ source install/setup.bash
 ```bash
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
+# source install/setup.zsh Mac에서
 ros2 launch capture_camera camera_gazebo.launch.py
 ```
 

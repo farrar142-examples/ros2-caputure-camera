@@ -2,6 +2,7 @@
 Launch file: Gazebo 시뮬레이션 + ros_gz_bridge + 카메라 캡처 노드
 """
 import os
+import platform
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -42,11 +43,29 @@ def generate_launch_description():
     )
 
     # 1) Start Gazebo Simulator
-    gz_sim = ExecuteProcess(
-        cmd=['gz', 'sim', '-r', world_file],
-        output='screen',
-        shell=False,
-    )
+    # macOS에서는 서버(-s)와 GUI(-g)를 별도 프로세스로 실행해야 함
+    # https://github.com/gazebosim/gz-sim/issues/44
+    is_macos = platform.system() == 'Darwin'
+
+    if is_macos:
+        gz_server = ExecuteProcess(
+            cmd=['gz', 'sim', '-s', '-r', world_file],
+            output='screen',
+            shell=False,
+        )
+        gz_gui = ExecuteProcess(
+            cmd=['gz', 'sim', '-g'],
+            output='screen',
+            shell=False,
+        )
+        gz_processes = [gz_server, gz_gui]
+    else:
+        gz_sim = ExecuteProcess(
+            cmd=['gz', 'sim', '-r', world_file],
+            output='screen',
+            shell=False,
+        )
+        gz_processes = [gz_sim]
 
     # 2) ros_gz_bridge: Bridge camera image from Gazebo to ROS2
     bridge = Node(
@@ -82,7 +101,7 @@ def generate_launch_description():
         save_dir_arg,
         interval_arg,
         headless_arg,
-        gz_sim,
+        *gz_processes,
         bridge,
         camera_capture,
     ])
