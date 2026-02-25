@@ -1,0 +1,54 @@
+# ========================
+# ROS2 / Colcon Build
+# ========================
+build/
+install/
+log/
+.colcon/
+
+# ========================
+# Captured Images (runtime output)
+# ========================
+captured_images/
+
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+.eggs/
+*.whl
+
+# ========================
+# Virtual Environments
+# ========================
+venv/
+.venv/
+env/
+
+# ========================
+# IDE / Editor
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ========================
+# OS
+# ========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# ROS bags
+# ========================
+*.bag
+*.db3
+metadata.yaml

@@ -1,0 +1,375 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="camera_world">
+
+    <!-- ======================== System Plugins ======================== -->
+    <plugin filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+
+    <!-- ======================== Lighting ======================== -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- ======================== Ground Plane ======================== -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ======================== Scene Objects ======================== -->
+
+    <!-- Red Box -->
+    <model name="red_box">
+      <static>true</static>
+      <pose>2.0 0.8 0.25 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material>
+            <ambient>0.8 0.1 0.1 1</ambient>
+            <diffuse>1.0 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Blue Cylinder -->
+    <model name="blue_cylinder">
+      <static>true</static>
+      <pose>2.5 -0.6 0.4 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.2</radius><length>0.8</length></cylinder></geometry>
+          <material>
+            <ambient>0.1 0.1 0.8 1</ambient>
+            <diffuse>0.2 0.2 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry><cylinder><radius>0.2</radius><length>0.8</length></cylinder></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Green Box -->
+    <model name="green_box">
+      <static>true</static>
+      <pose>3.5 0.0 0.3 0 0 0.4</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.6 0.6 0.6</size></box></geometry>
+          <material>
+            <ambient>0.1 0.7 0.1 1</ambient>
+            <diffuse>0.2 0.9 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>0.6 0.6 0.6</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Yellow Sphere -->
+    <model name="yellow_sphere">
+      <static>true</static>
+      <pose>1.8 -1.2 0.3 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><sphere><radius>0.3</radius></sphere></geometry>
+          <material>
+            <ambient>0.8 0.8 0.1 1</ambient>
+            <diffuse>1.0 1.0 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry><sphere><radius>0.3</radius></sphere></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Purple Wall -->
+    <model name="purple_wall">
+      <static>true</static>
+      <pose>5.0 0.0 1.0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.2 4.0 2.0</size></box></geometry>
+          <material>
+            <ambient>0.5 0.1 0.6 1</ambient>
+            <diffuse>0.7 0.2 0.8 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry><box><size>0.2 4.0 2.0</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Orange Cone (approximated with cylinder) -->
+    <model name="orange_cone">
+      <static>true</static>
+      <pose>1.5 1.5 0.2 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cone><radius>0.2</radius><length>0.4</length></cone></geometry>
+          <material>
+            <ambient>0.9 0.5 0.1 1</ambient>
+            <diffuse>1.0 0.6 0.1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry><cone><radius>0.2</radius><length>0.4</length></cone></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- ======================== Camera Robot ======================== -->
+    <model name="camera_robot">
+      <pose>0 0 0.08 0 0 0</pose>
+
+      <!-- Chassis -->
+      <link name="chassis">
+        <pose>0 0 0.04 0 0 0</pose>
+        <inertial>
+          <mass>5.0</mass>
+          <inertia>
+            <ixx>0.042</ixx>
+            <iyy>0.067</iyy>
+            <izz>0.042</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry><box><size>0.28 0.18 0.08</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.28 0.18 0.08</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.25 0.25 0.25 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- Camera Mount (top of chassis) -->
+      <link name="camera_mount">
+        <pose>0.1 0 0.12 0 0 0</pose>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.00005</ixx>
+            <iyy>0.00005</iyy>
+            <izz>0.00005</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry><box><size>0.04 0.04 0.04</size></box></geometry>
+          <material>
+            <ambient>0.1 0.1 0.8 1</ambient>
+            <diffuse>0.2 0.2 1.0 1</diffuse>
+          </material>
+        </visual>
+
+        <!-- Camera Sensor -->
+        <sensor name="camera_sensor" type="camera">
+          <pose>0.02 0 0 0 0 0</pose>
+          <always_on>1</always_on>
+          <update_rate>10</update_rate>
+          <visualize>true</visualize>
+          <topic>camera</topic>
+          <camera>
+            <horizontal_fov>1.3962634</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+        </sensor>
+      </link>
+
+      <!-- Camera Mount Joint -->
+      <joint name="camera_mount_joint" type="fixed">
+        <parent>chassis</parent>
+        <child>camera_mount</child>
+      </joint>
+
+      <!-- Left Wheel -->
+      <link name="left_wheel">
+        <pose>0.0 0.11 0.0 -1.5707963 0 0</pose>
+        <inertial>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <iyy>0.0005</iyy>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry><cylinder><radius>0.07</radius><length>0.03</length></cylinder></geometry>
+          <surface>
+            <friction>
+              <ode><mu>1.0</mu><mu2>1.0</mu2></ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.07</radius><length>0.03</length></cylinder></geometry>
+          <material>
+            <ambient>0.05 0.05 0.05 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- Right Wheel -->
+      <link name="right_wheel">
+        <pose>0.0 -0.11 0.0 -1.5707963 0 0</pose>
+        <inertial>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <iyy>0.0005</iyy>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry><cylinder><radius>0.07</radius><length>0.03</length></cylinder></geometry>
+          <surface>
+            <friction>
+              <ode><mu>1.0</mu><mu2>1.0</mu2></ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.07</radius><length>0.03</length></cylinder></geometry>
+          <material>
+            <ambient>0.05 0.05 0.05 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- Caster Wheel -->
+      <link name="caster">
+        <pose>-0.11 0 -0.03 0 0 0</pose>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.00008</ixx>
+            <iyy>0.00008</iyy>
+            <izz>0.00008</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry><sphere><radius>0.04</radius></sphere></geometry>
+          <surface>
+            <friction>
+              <ode><mu>0.0</mu><mu2>0.0</mu2></ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry><sphere><radius>0.04</radius></sphere></geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.3 0.3 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- Joints -->
+      <joint name="left_wheel_joint" type="revolute">
+        <parent>chassis</parent>
+        <child>left_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.79769e+308</lower>
+            <upper>1.79769e+308</upper>
+          </limit>
+        </axis>
+      </joint>
+
+      <joint name="right_wheel_joint" type="revolute">
+        <parent>chassis</parent>
+        <child>right_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.79769e+308</lower>
+            <upper>1.79769e+308</upper>
+          </limit>
+        </axis>
+      </joint>
+
+      <joint name="caster_joint" type="ball">
+        <parent>chassis</parent>
+        <child>caster</child>
+      </joint>
+
+      <!-- Differential Drive Plugin -->
+      <plugin filename="gz-sim-diff-drive-system"
+              name="gz::sim::systems::DiffDrive">
+        <left_joint>left_wheel_joint</left_joint>
+        <right_joint>right_wheel_joint</right_joint>
+        <wheel_separation>0.22</wheel_separation>
+        <wheel_radius>0.07</wheel_radius>
+        <max_linear_acceleration>1.0</max_linear_acceleration>
+        <min_linear_acceleration>-1.0</min_linear_acceleration>
+        <max_angular_acceleration>2.0</max_angular_acceleration>
+        <min_angular_acceleration>-2.0</min_angular_acceleration>
+        <topic>cmd_vel</topic>
+        <odom_topic>odom</odom_topic>
+      </plugin>
+
+    </model>
+
+  </world>
+</sdf>
